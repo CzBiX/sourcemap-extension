@@ -513,7 +513,7 @@ export async function saveRecoveredSourcesZip(result: ScanResult): Promise<SaveR
       const downloadId = await chrome.downloads.download({
         url: `data:application/zip;base64,${base64}`,
         filename,
-        saveAs: true,
+        saveAs: false,
         conflictAction: "uniquify"
       });
       return { filename, downloadId, fallback: false };
