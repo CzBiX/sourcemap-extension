@@ -11,7 +11,7 @@ A Chrome DevTools extension that recovers the original, pre-build source files o
 
 ## Install
 
-1. Download the latest `.zip` from `Releases`.
+1. Download the latest `.zip` from [Releases](https://github.com/CzBiX/sourcemap-extension/releases/latest).
 2. Open `chrome://extensions` and enable **Developer mode** (top-right).
 3. Drag the `.zip` onto the extensions page to install it.
 
