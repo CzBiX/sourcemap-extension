@@ -3,49 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <title>Source Maps</title>
-    <link rel="stylesheet" href="%BASE_URL%panel.css" />
   </head>
   <body>
-    <div id="toolbar">
-      <button id="scan-button">Scan Pages</button>
-      <button id="save-button" disabled>Save sources ZIP</button>
-    </div>
-    <div id="summary" role="status"></div>
-    <div id="tabs" role="tablist">
-      <button id="tab-btn-maps" class="tab-button" role="tab" aria-selected="true" aria-controls="tab-panel-maps">Source Maps</button>
-      <button id="tab-btn-files" class="tab-button" role="tab" aria-selected="false" aria-controls="tab-panel-files">Recovered Files</button>
-      <button id="tab-btn-log" class="tab-button" role="tab" aria-selected="false" aria-controls="tab-panel-log">Log</button>
-    </div>
-    <div id="tab-panel-maps" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-maps">
-      <table id="maps-table">
-        <thead>
-          <tr>
-            <th class="status-icon-col"></th>
-            <th>Generated resource</th>
-            <th>Source map</th>
-            <th>Recovered</th>
-            <th>Missing</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-    <div id="tab-panel-files" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-files" hidden>
-      <table id="files-table">
-        <thead>
-          <tr>
-            <th>File</th>
-            <th>Type</th>
-            <th>Size</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-    <div id="tab-panel-log" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-log" hidden>
-      <pre id="log"></pre>
-    </div>
-    <script type="module" src="%BASE_URL%panel.ts"></script>
+    <div id="root"></div>
+    <script type="module" src="%BASE_URL%panel.tsx"></script>
   </body>
 </html>

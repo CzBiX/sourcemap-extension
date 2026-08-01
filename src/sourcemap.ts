@@ -505,7 +505,7 @@ export async function saveRecoveredSourcesZip(result: ScanResult): Promise<SaveR
 
   const host = safeHostname(result.inspectedUrl) || "inspected-page";
   const basename = `${host}-${formatTimestamp(new Date())}.zip`;
-  const filename = `sourcemap-sources/${basename}`;
+  const filename = `${basename}`;
 
   if (typeof chrome !== "undefined" && typeof chrome.downloads?.download === "function") {
     try {
@@ -518,6 +518,7 @@ export async function saveRecoveredSourcesZip(result: ScanResult): Promise<SaveR
       });
       return { filename, downloadId, fallback: false };
     } catch {
+      console.warn("chrome.downloads.download failed, falling back to DOM anchor download");
       // Fall through to the DOM anchor fallback below.
     }
   }

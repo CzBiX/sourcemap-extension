@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
@@ -9,7 +9,9 @@
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
     "types": ["vitest/globals", "vite/client"],
-    "lib": ["ES2022", "ESNext.Promise", "DOM", "DOM.Iterable"]
+    "lib": ["ES2024", "ESNext.Promise", "DOM", "DOM.Iterable"],
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js"
   },
-  "include": ["src", "vite.config.ts", "dev.ts"]
+  "include": ["src", "vite.config.ts", "dev.ts", "uno.config.ts"]
 }
