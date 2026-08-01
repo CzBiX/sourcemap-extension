@@ -187,8 +187,14 @@ end — they are not unit tested (see Testing & QA).
 - **No linter or formatter configured** (no ESLint/Prettier/Biome,
   no editorconfig). Match the existing style by hand; don't introduce a
   formatter/linter config without raising it first.
-- **No CI** (no `.github/workflows`). `pnpm build` and `pnpm test` are the
-  only automated checks — run both yourself before considering work done.
+- **CI**: `.github/workflows/ci.yml` runs `pnpm test` + `pnpm build` on pull
+  requests targeting `main`. `.github/workflows/nightly.yml` runs on every
+  push to `main` (or manual dispatch): `pnpm test`, `pnpm ext:build`, then
+  force-moves the `nightly` git tag to the new commit and republishes the
+  single rolling **`nightly`** GitHub Release (marked Pre-release) with the
+  resulting `web-ext-artifacts/*.zip`, replacing the previous asset. There
+  is no semver tagging step — `package.json`/`manifest.json` `version`
+  fields are not read by CI.
 - TypeScript is strict-mode (`tsconfig.json`); keep new code
   `noUncheckedIndexedAccess`-clean (guard indexed/regex-group access with
   `??`, not `!`).

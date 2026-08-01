@@ -18,3 +18,10 @@ A Chrome DevTools extension that recovers the original, pre-build source files o
 ## Usage
 
 Open the page to inspect → DevTools → **Source Maps** panel → **Scan Pages** → **Save sources ZIP**.
+
+## Releasing
+
+There's no versioned release process — every push to `main` (or a manual
+run of the `Nightly` workflow) rebuilds the extension and republishes it as
+the single **`nightly`** release on the `Releases` page, marked
+**Pre-release**.
