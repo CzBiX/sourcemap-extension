@@ -33,6 +33,11 @@ jobs:
       - name: Build extension package
         run: pnpm ext:build
 
+      - name: Move nightly tag
+        run: |
+          git tag -f nightly
+          git push -f origin nightly
+
       - name: Publish nightly release
         uses: softprops/action-gh-release@v3
         with:
