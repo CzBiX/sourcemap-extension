@@ -1,0 +1,4 @@
+node_modules/
+extension/
+web-ext-artifacts/
+*.log

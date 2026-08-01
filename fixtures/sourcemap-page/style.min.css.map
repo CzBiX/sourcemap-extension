@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "style.min.css",
+  "sources": ["src/styles/main.css"],
+  "sourcesContent": [
+    "body {\n  font-family: sans-serif;\n  color: #222222;\n}\n"
+  ],
+  "names": [],
+  "mappings": "AAAA"
+}

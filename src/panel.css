@@ -1,0 +1,131 @@
+:root {
+  color-scheme: light dark;
+  --fg: #202124;
+  --bg: #ffffff;
+  --border: #dadce0;
+  --muted: #5f6368;
+  --error: #d93025;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #e8eaed;
+    --bg: #202124;
+    --border: #3c4043;
+    --muted: #9aa0a6;
+    --error: #f28b82;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 8px;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 12px;
+  color: var(--fg);
+  background: var(--bg);
+}
+
+#toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+button {
+  font: inherit;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--fg);
+  cursor: pointer;
+}
+
+button:disabled {
+  color: var(--muted);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+#summary {
+  margin-bottom: 8px;
+  color: var(--muted);
+}
+
+#tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab-button {
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  padding: 6px 10px;
+  color: var(--muted);
+}
+
+.tab-button[aria-selected="true"] {
+  color: var(--fg);
+  border-bottom-color: var(--fg);
+}
+
+.tab-panel[hidden] {
+  display: none;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 8px;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+}
+
+th {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+#maps-table td:last-child {
+  max-width: 10em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#maps-table .status-icon-col {
+  width: 1.5em;
+}
+
+#maps-table .status-icon {
+  text-align: center;
+  font-weight: 600;
+}
+
+#maps-table .status-icon.status-icon-error {
+  color: var(--error);
+}
+
+#log {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: transparent;
+  margin: 0;
+}

@@ -1,0 +1,22 @@
+{
+  "name": "ext-sourcemap",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.28.0",
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest run",
+    "ext:run": "web-ext run --source-dir extension --target chromium",
+    "ext:build": "pnpm build && web-ext build --source-dir extension --artifacts-dir web-ext-artifacts --overwrite-dest"
+  },
+  "dependencies": {
+    "fflate": "^0.8.3"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vite": "^8.2.0",
+    "vitest": "^4.1.10",
+    "web-ext": "^10.5.0"
+  }
+}
