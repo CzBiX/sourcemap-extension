@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <title>Source Maps</title>
-    <link rel="stylesheet" href="/panel.css" />
+    <link rel="stylesheet" href="%BASE_URL%panel.css" />
   </head>
   <body>
     <div id="toolbar">
-      <button id="scan-button">Scan page</button>
+      <button id="scan-button">Scan Pages</button>
       <button id="save-button" disabled>Save sources ZIP</button>
     </div>
     <div id="summary" role="status"></div>
@@ -46,6 +46,6 @@
     <div id="tab-panel-log" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-log" hidden>
       <pre id="log"></pre>
     </div>
-    <script type="module" src="/panel.ts"></script>
+    <script type="module" src="%BASE_URL%panel.ts"></script>
   </body>
 </html>

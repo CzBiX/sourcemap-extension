@@ -101,6 +101,13 @@ th {
   font-weight: 600;
 }
 
+
+#maps-table td:nth-child(3) {
+  max-width: 14em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 #maps-table td:last-child {
   max-width: 10em;
   white-space: nowrap;

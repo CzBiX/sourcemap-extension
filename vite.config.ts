@@ -3,16 +3,13 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   root: "src",
-  base: "",
-  publicDir: resolve(import.meta.dirname, "public"),
   build: {
-    outDir: resolve(import.meta.dirname, "extension"),
+    outDir: resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
-    assetsInlineLimit: 0,
     rollupOptions: {
       input: {
-        devtools: resolve(import.meta.dirname, "src/devtools.html"),
-        panel: resolve(import.meta.dirname, "src/panel.html")
+        devtools: "devtools.html",
+        panel: "panel.html",
       }
     }
   }

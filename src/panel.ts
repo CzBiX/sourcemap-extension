@@ -46,9 +46,7 @@ function fileTypeOf(path: string): string {
 
 function displayMapUrl(mapUrl: string): string {
   if (!mapUrl.startsWith("data:")) return mapUrl;
-  const comma = mapUrl.indexOf(",");
-  const meta = comma === -1 ? mapUrl.slice(5) : mapUrl.slice(5, comma);
-  return `(inline source map: ${meta || "data URL"})`;
+  return "inline source map";
 }
 
 function formatSize(bytes: number): string {
@@ -70,6 +68,7 @@ function renderResult(result: ScanResult): void {
     generatedCell.textContent = map.generatedUrls.length > 0 ? map.generatedUrls.join(", ") : "(direct map)";
     const mapUrlCell = document.createElement("td");
     mapUrlCell.textContent = displayMapUrl(map.mapUrl);
+    mapUrlCell.title = mapUrlCell.textContent;
     const recoveredCell = document.createElement("td");
     recoveredCell.textContent = String(map.recoveredCount);
     const missingCell = document.createElement("td");
