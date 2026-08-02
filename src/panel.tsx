@@ -1,7 +1,7 @@
-import { For, createSignal } from "solid-js";
+import { For, Show, createSignal } from "solid-js";
 import { render } from "solid-js/web";
 import "virtual:uno.css";
-import { saveRecoveredSourcesZip, scanInspectedPage, type RecoveredFile, type RecoveredMap, type ScanResult } from "./sourcemap";
+import { saveRecoveredSourcesZip, scanInspectedPage, type RecoveredFile, type RecoveredMap, type ScanProgress, type ScanResult } from "./sourcemap";
 
 function fileTypeOf(path: string): string {
   const dot = path.lastIndexOf(".");
@@ -22,6 +22,11 @@ function formatSize(bytes: number): string {
 function summarizeResult(result: ScanResult): string {
   const totalMissing = result.maps.reduce((sum, map) => sum + map.missingCount, 0);
   return `${result.maps.length} source maps, ${result.files.length} recovered files, ${totalMissing} missing`;
+}
+
+function progressLabel(progress: ScanProgress): string {
+  const phase = progress.phase === "reading" ? "Reading resources" : "Resolving source maps";
+  return `${phase} (${progress.completed}/${progress.total})`;
 }
 
 function diagnosticLogFor(result: ScanResult): string {
@@ -54,6 +59,7 @@ function App() {
   const [isScanning, setIsScanning] = createSignal(false);
   const [summaryText, setSummaryText] = createSignal("");
   const [logText, setLogText] = createSignal("");
+  const [progress, setProgress] = createSignal<ScanProgress | null>(null);
 
   function appendLog(message: string): void {
     setLogText((current) => `${current}${message}\n`);
@@ -68,8 +74,9 @@ function App() {
       setIsScanning(true);
       setSummaryText("Scanning inspected page...");
       setLogText("");
+      setProgress(null);
       try {
-        const result = await scanInspectedPage();
+        const result = await scanInspectedPage((next) => setProgress(next));
         setDisplayedResult(result);
         setDownloadableResult(result);
         setSummaryText(summarizeResult(result));
@@ -81,6 +88,7 @@ function App() {
         appendLog(error instanceof Error ? error.message : String(error));
       } finally {
         setIsScanning(false);
+        setProgress(null);
       }
     })();
   }
@@ -108,6 +116,14 @@ function App() {
           Save sources ZIP
         </button>
       </div>
+      <Show when={isScanning() ? progress() : null}>
+        {(p) => (
+          <div id="scan-progress" class="mb-2">
+            <progress class="block w-full" value={p().completed} max={p().total} />
+            <div class="text-[11px] text-[var(--muted)]">{progressLabel(p())}</div>
+          </div>
+        )}
+      </Show>
       <div id="summary" role="status" class="mb-2 text-[var(--muted)]">
         {summaryText()}
       </div>

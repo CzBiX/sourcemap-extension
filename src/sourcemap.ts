@@ -31,6 +31,8 @@ export type ScanResult = {
   files: RecoveredFile[];
 };
 
+export type ScanProgress = { phase: "reading" | "resolving"; completed: number; total: number };
+
 export type SaveResult = { filename: string; downloadId?: number; fallback: boolean };
 
 type RawSourceMap = {
@@ -347,13 +349,13 @@ async function getInspectedUrl(): Promise<string | null> {
 
 // ---- Whole-page scan orchestration ----
 
-export async function scanInspectedPage(): Promise<ScanResult> {
+export async function scanInspectedPage(onProgress?: (progress: ScanProgress) => void): Promise<ScanResult> {
   const inspectedUrl = await getInspectedUrl();
   const resources = await getInspectedResources();
 
   const resourceTextByUrl = new Map<string, string>();
   const readResources: { url: string; text: string }[] = [];
-  for (const resource of resources) {
+  for (const [index, resource] of resources.entries()) {
     try {
       const { text } = await readResourceText(resource);
       resourceTextByUrl.set(resource.url, text);
@@ -361,12 +363,16 @@ export async function scanInspectedPage(): Promise<ScanResult> {
     } catch {
       // Resource content unavailable (e.g. opaque or unsupported encoding); skip it.
     }
+    onProgress?.({ phase: "reading", completed: index + 1, total: resources.length });
   }
 
   const directMapUrls = new Set<string>();
   for (const { url, text } of readResources) {
     if (isDirectMapResource(url, text)) directMapUrls.add(url);
   }
+
+  const resolveTotal = readResources.length + directMapUrls.size;
+  let resolveCompleted = 0;
 
   const processed = new Map<string, { map: RecoveredMap; files: RecoveredFile[] }>();
 
@@ -378,6 +384,8 @@ export async function scanInspectedPage(): Promise<ScanResult> {
   }
 
   for (const { url: generatedUrl, text } of readResources) {
+    resolveCompleted += 1;
+    onProgress?.({ phase: "resolving", completed: resolveCompleted, total: resolveTotal });
     const kind = classifyGeneratedKind(generatedUrl, text);
     if (!kind) continue;
     const sourceMappingUrl = extractSourceMappingUrl(text, kind);
@@ -440,6 +448,8 @@ export async function scanInspectedPage(): Promise<ScanResult> {
   }
 
   for (const mapUrl of directMapUrls) {
+    resolveCompleted += 1;
+    onProgress?.({ phase: "resolving", completed: resolveCompleted, total: resolveTotal });
     const text = resourceTextByUrl.get(mapUrl);
     if (text === undefined) continue;
     const result = await recoverSourcesFromMap(text, mapUrl, null, defaultFetchText);
