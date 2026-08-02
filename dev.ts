@@ -31,6 +31,8 @@ const DEV_CSP = "script-src 'self' http://localhost:* http://127.0.0.1:*";
 async function writeDevManifest(publicDir: string, outDir: string): Promise<void> {
   const raw = await readFile(resolve(publicDir, "manifest.json"), "utf8");
   const manifest = JSON.parse(raw) as Record<string, unknown>;
+  manifest.version_name = manifest.version + "-dev";
+  manifest.host_permissions = ["http://localhost/*"];
   manifest.content_security_policy = { extension_pages: DEV_CSP };
   await writeFile(resolve(outDir, "manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`);
 }

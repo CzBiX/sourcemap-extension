@@ -4,6 +4,5 @@
   "version": "0.1.0",
   "description": "Extract source maps from the inspected page and save recovered sources.",
   "devtools_page": "devtools.html",
-  "permissions": ["downloads"],
-  "host_permissions": ["<all_urls>"]
+  "permissions": ["downloads"]
 }
